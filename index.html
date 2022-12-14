@@ -32,38 +32,43 @@
     </section>
 
     <section class="editor-container hidden">
-
-        <div class="canvas-container">
-            <canvas id="canvas" width="450" height="450"></canvas>
-        </div>
-        <div class="editors">
-            <label for="text">
-                <input type="text" name="text" id="text" onchange="onChangeText(event)" placeholder="Enter text....">
-            </label>
-            <div class="nav-btn-container">
-                <button class="arrow-btn">&#x2193</button>
-                <button class="arrow-btn">&#x2191</button>
-                <button class="addLine-btn">+</button>
-                <button class="delete-btn">Delete</button>
+        <div class="main-container">
+            <div class="canvas-container">
+                <canvas id="canvas" width="835" height="650"></canvas>
             </div>
-            <div class="font-container">
-                <button class="font-aling-left">left</button>
-                <button class="font-aling-center">center</button>
-                <button class="font-aling-right">right</button>
-                <label for="borderColor">
-                    <input type="color" id="borderColor">
+            <div class="editors">
+                <label for="text">
+                    <input type="text" name="text" id="text" oninput="onChangeText(event)" placeholder="Enter text....">
                 </label>
-                <label for="bgc">
-                    <input type="color" id="bgc">
-                </label>
+                <div class="nav-btn-container">
+                    <button class="arrow-btn" onclick="onDecreaseFont(1)">&#x2193</button>
+                    <button class="arrow-btn" onclick="onIncreaseFont(1)">&#x2191</button>
+                    <button class="switchLine-btn" onclick="onSwitchLines(1)"> &#x2191 &#x2193</button>
+                    <button class="addLine-btn">+</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+                <div class="font-container">
+                    <button class="font-aling-left">left</button>
+                    <button class="font-aling-center">center</button>
+                    <button class="font-aling-right">right</button>
+                    <label for="borderColor">
+                        borderColor:
+                        <input type="color" id="borderColor">
+                    </label>
+                    <label for="bgc">
+                        BackgroundColor:
+                        <input type="color" id="bgc" onchange="OnChangeBgc(event)">
+                    </label>
+
+                </div>
 
             </div>
-
         </div>
     </section>
 
     <script src="js/main.js"></script>
     <script src="js/meme-service.js"></script>
+    <script src="js/galleryController.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>
 

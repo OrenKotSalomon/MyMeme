@@ -37,17 +37,35 @@ body {
 }
 
 .editor-container {
-    background-color: cadetblue;
+    background-color: rgb(227, 232, 232);
     display: flex;
     justify-content: space-around;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
 }
 
-.editors {
-    background-color: azure;
+.main-container {
+    display: flex;
+    width: 100vw;
+    height: 75vh;
+    justify-content: space-between;
+    background-color: #fff;
+
 }
+
+.canvas-container {
+    margin: 0 auto;
+    width: 50vw;
+    height: 70vh;
+}
+
 
 canvas {
-    background-color: #fff;
+    display: block;
+    margin: 0 auto;
+    outline: 1px solid black;
+    background-color: white;
 }
 
 .hidden {

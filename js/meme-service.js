@@ -1,23 +1,6 @@
 
 
 
-
-let gMemeIdx = 1
-let gMeme =
-{
-    id: gMemeIdx,
-    selectedLineIdx: 0,
-    lines: [
-        {
-            txt: 'I sometimes eat Falafel',
-            size: 20,
-            align: 'left',
-            color: 'red'
-        }
-    ]
-}
-
-
 var gImgs = [{ id: 1, url: 'images/1.jpg', keywords: ['funny', 'cat'] },
 { id: 2, url: 'images/2.jpg', keywords: ['funny', 'cat'] },
 { id: 3, url: 'images/3.jpg', keywords: ['funny', 'cat'] },
@@ -26,25 +9,93 @@ var gImgs = [{ id: 1, url: 'images/1.jpg', keywords: ['funny', 'cat'] },
 { id: 6, url: 'images/6.jpg', keywords: ['funny', 'cat'] },
 { id: 7, url: 'images/7.jpg', keywords: ['funny', 'cat'] }
 ];
+// let gMemeIdx = 1
+let gMeme =
+{
+    id: 0,
+    selectedLineIdx: 0,
+    lines: [
+        {
+            txt: 'I sometimes eat Falafel',
+            size: 30,
+            align: 'center',
+            color: 'white',
+            isFocus: false
+        },
+        {
+            txt: 'I  eat Falafel',
+            size: 30,
+            align: 'center',
+            color: 'white',
+            isFocus: false
+        }
+
+    ]
+}
 
 
 
+
+function switchLines() {
+
+    console.log(gMeme.lines.length);
+    if (gMeme.selectedLineIdx < gMeme.lines.length - 1) {
+        gMeme.selectedLineIdx++
+    } else {
+        gMeme.selectedLineIdx = 0
+    }
+
+}
+
+
+function setLineTxt(value) {
+    let selectedLine = gMeme.selectedLineIdx
+    gMeme.lines[selectedLine].txt = value
+}
+
+function setColor(vlaue) {
+    let selectedLine = gMeme.selectedLineIdx
+    gMeme.lines[selectedLine].color = vlaue
+}
+
+function getMeme() {
+    return gMeme
+}
 
 function getImages() {
     return gImgs
-
 }
 
-function getLineText(value) {
-    gMeme.lines[0].txt = value
-    console.log('gMeme', gMeme);
+
+
+function setImg(id) {
+    gMeme.id = id
+}
+function increaseFont() {
+    // console.log('', );
+    let selectedLine = gMeme.selectedLineIdx
+
+    gMeme.lines[selectedLine].size++
+    // console.log('gMeme', gMeme.lines[selectedLine].size);
 
 }
+function decreaseFont() {
+    let selectedLine = gMeme.selectedLineIdx
+    gMeme.lines[selectedLine].size--
+    // console.log('gMeme', gMeme.lines[selectedLine].size);
+}
 
+
+function getCurrImg() {
+    let currUrl = gImgs.find(img => img.id === gMeme.id)
+
+    return currUrl.url
+}
 
 function getMemeLine() {
     // console.log(gMeme.lines);
-    let lines = gMeme.lines[0].txt
+    let selectedLine = gMeme.selectedLineIdx
+    let lines = gMeme.lines[selectedLine].txt
     return lines
     // return gMeme
 }
@@ -70,7 +121,7 @@ function getMemeLine() {
 // var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
 // var gMeme = {
 //  selectedImgId: 5,
-//  selectedLineIdx: 0,
+//  selectedLineIdx: selectedLineIdx,
 
 
 
