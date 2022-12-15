@@ -32,6 +32,10 @@
                 <div class="words-filter"></div>
                 <button class="more-words-btn">More</button>
             </div>
+            <button class="btn-random" onclick="onRandomMeme()">Random Meme!</button>
+            <button class="btn-upload">
+                Upload Image from Canvas
+            </button>
             <div class="img-container">
 
             </div>
@@ -76,8 +80,9 @@
 
                 </div>
                 <div class="btn-editor-container">
-                    <button class="share">Share</button>
-                    <button class="download">Download</button>
+                    <button class="share" onclick="onShareImg()">Share</button>
+                    <button class="download"><a href="#" class="btn" onclick="downloadImg(this)"
+                            download="my-img.jpg">Download</a></button>
                 </div>
             </div>
         </div>

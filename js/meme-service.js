@@ -17,7 +17,7 @@ let gMeme =
     lines: [
         {
             txt: 'I sometimes eat Falafel',
-            size: 38,
+            size: 30,
             align: 'center',
             color: 'white',
             x: 200,
@@ -26,7 +26,7 @@ let gMeme =
         },
         {
             txt: 'I  eat Falafel',
-            size: 38,
+            size: 30,
             align: 'center',
             color: 'white',
             x: 200,
@@ -40,9 +40,28 @@ let gMeme =
 
 
 
+
+function moveLine(pos) {
+    let lineIdx = gMeme.selectedLineIdx
+    let line = gMeme.lines[lineIdx]
+
+    line.x = pos.x
+    line.y = pos.y
+    // console.log('line', line);
+
+}
+
+function setLineDrag(isDrag) {
+    let lineIdx = gMeme.selectedLineIdx
+    let line = gMeme.lines[lineIdx]
+    // console.log('isDrag', isDrag);
+
+    line.isDrag = isDrag
+}
+
 function switchLines() {
 
-    console.log(gMeme.lines.length);
+    // console.log(gMeme.lines.length);
     if (gMeme.selectedLineIdx < gMeme.lines.length - 1) {
         gMeme.selectedLineIdx++
     } else {

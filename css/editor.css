@@ -88,6 +88,25 @@ button {
 }
 
 
+
 .editor-container button {
     border-radius: 12.5px;
+    cursor: pointer;
+}
+
+.share {
+    background-color: rgb(179, 39, 179);
+}
+
+.save {
+    background-color: #40e259;
+}
+
+.download {
+    background-color: #33abc9;
+}
+
+.download a {
+    text-decoration: none;
+    text-transform: none;
 }
