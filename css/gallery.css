@@ -1,0 +1,19 @@
+.img-container img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+
+.img-container {
+    display: grid;
+    margin: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    ;
+    gap: 10px;
+}
+
+.gallery-container {
+    background-color: var(--clr2);
+    margin: 1em;
+
+}

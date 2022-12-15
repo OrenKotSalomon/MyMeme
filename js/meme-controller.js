@@ -7,13 +7,13 @@ function onInit() {
     gCanvas = document.querySelector('#canvas')
     gCtx = gCanvas.getContext('2d')
     renderImages()
-
     window.addEventListener('resize', () => {
 
         resizeCanvas()
 
     })
     // resizeCanvas()
+
 
 }
 
@@ -63,29 +63,30 @@ function renderLines() {
     let meme = getMeme()
     // let memeLines = meme.lines[selectedLine]
     let lines = meme.lines
-    console.log('lines', lines);
+    // console.log('lines', lines);
 
     lines.forEach((line, idx) => {
-
+        // debugger
         if (!idx) {
-            gCtx.font = `${line.size}px Arial`
+            gCtx.font = `${line.size}px Impact`
             gCtx.fillStyle = line.color
             gCtx.textBaseline = line.align
             gCtx.textAlign = line.align
             gCtx.lineWidth = 10
 
-            gCtx.strokeText(line.txt, 200, 50) //img,x,y,xEnd,yEnd
-            gCtx.fillText(line.txt, 200, 50)
+            gCtx.strokeText(line.txt, line.x, line.y) //img,x,y,xEnd,yEnd
+            gCtx.fillText(line.txt, line.x, line.y)
         }
         if (idx === 1) {
             gCtx.beginPath()
-            gCtx.font = `${line.size}px Arial`
+            gCtx.font = `${line.size}px Impact`
             gCtx.fillStyle = line.color
-            gCtx.lineWidth = 10
             gCtx.textBaseline = line.align
             gCtx.textAlign = line.align
-            gCtx.strokeText(line.txt, 200, 400) //img,x,y,xEnd,yEnd
-            gCtx.fillText(line.txt, 200, 400) //img,x,y,xEnd,yEnd
+            gCtx.lineWidth = 10
+
+            gCtx.strokeText(line.txt, line.x, line.y)//img,x,y,xEnd,yEnd
+            gCtx.fillText(line.txt, line.x, line.y)
         }
         // else {
         //     gCtx.beginPath()
@@ -107,11 +108,7 @@ function onSwitchLines() {
 
 
 function renderMeme() {
-    let meme = getMeme()
-    let selectedLine = meme.selectedLineIdx
     let currImg = getCurrImg()
-    let memeLines = meme.lines[selectedLine]
-    // console.log(memeLines.color);
 
     const img = new Image()
     img.src = currImg
@@ -124,8 +121,8 @@ function renderMeme() {
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
+    gCanvas.width = elContainer.offsetWidth - 200
+    gCanvas.height = elContainer.offsetHeight - 100
     renderMeme()
 
 }

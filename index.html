@@ -6,15 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/gallery.css">
     <title>Document</title>
 </head>
 
-<body onload="onInit()">
-    <header>
+<body onload="onInit()" class="main-layout full">
+    <header class="header full">
         <nav class="nav-container">
             <div class="logo">LOGO</div>
             <ul class="link-container">
-                <li><a href="index.html">Gallery</a></li>
+                <li><a class="gallery-link" href="index.html">Gallery</a></li>
                 <li><a href="">Memes</a></li>
                 <li><a href="https://www.linkedin.com/in/oren-kot-1344681b4/">About</a></li>
             </ul>
@@ -22,46 +24,61 @@
     </header>
 
     <section class="gallery-container">
-        <label for="search">
-            <input type="search" id="search" placeholder="search...">
-        </label>
-        <div class="img-container">
+        <div class="gallery-main-container">
+            <div class="search-container">
+                <label for="search">
+                    <input type="search" id="search" placeholder="search...">
+                </label>
+                <div class="words-filter"></div>
+                <button class="more-words-btn">More</button>
+            </div>
+            <div class="img-container">
 
+            </div>
         </div>
-
     </section>
 
     <section class="editor-container hidden">
         <div class="main-container">
             <div class="canvas-container">
-                <canvas id="canvas" width="835" height="650"></canvas>
+                <canvas id="canvas" width="500" height="550"></canvas>
             </div>
             <div class="editors">
                 <label for="text">
-                    <input type="text" name="text" id="text" oninput="onChangeText(event)" placeholder="Enter text....">
+                    <input class="line-text" type="text" name="text" id="text" oninput="onChangeText(event)"
+                        placeholder="Enter text....">
                 </label>
-                <div class="nav-btn-container">
-                    <button class="arrow-btn" onclick="onDecreaseFont(1)">&#x2193</button>
-                    <button class="arrow-btn" onclick="onIncreaseFont(1)">&#x2191</button>
+                <div class="line-control">
                     <button class="switchLine-btn" onclick="onSwitchLines(1)"> &#x2191 &#x2193</button>
                     <button class="addLine-btn">+</button>
                     <button class="delete-btn">Delete</button>
                 </div>
                 <div class="font-container">
+                    <button class="arrow-btn" onclick="onIncreaseFont(1)">A+</button>
+                    <button class="arrow-btn" onclick="onDecreaseFont(1)">A-</button>
                     <button class="font-aling-left">left</button>
                     <button class="font-aling-center">center</button>
                     <button class="font-aling-right">right</button>
+                    <select name="font-select" id="font-select">
+                        <option value="impact">impact</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
                     <label for="borderColor">
-                        borderColor:
+                        S
                         <input type="color" id="borderColor">
                     </label>
                     <label for="bgc">
-                        BackgroundColor:
+                        bgc
                         <input type="color" id="bgc" onchange="OnChangeBgc(event)">
                     </label>
 
                 </div>
-
+                <div class="btn-editor-container">
+                    <button class="share">Share</button>
+                    <button class="download">Download</button>
+                </div>
             </div>
         </div>
     </section>

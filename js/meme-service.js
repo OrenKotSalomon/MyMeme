@@ -17,17 +17,21 @@ let gMeme =
     lines: [
         {
             txt: 'I sometimes eat Falafel',
-            size: 30,
+            size: 38,
             align: 'center',
             color: 'white',
-            isFocus: false
+            x: 200,
+            y: 50,
+            isDrag: false
         },
         {
             txt: 'I  eat Falafel',
-            size: 30,
+            size: 38,
             align: 'center',
             color: 'white',
-            isFocus: false
+            x: 200,
+            y: 450,
+            isDrag: false
         }
 
     ]
@@ -88,6 +92,7 @@ function decreaseFont() {
 
 function getCurrImg() {
     let currUrl = gImgs.find(img => img.id === gMeme.id)
+    // console.log('currUrl', currUrl);
 
     return currUrl.url
 }
