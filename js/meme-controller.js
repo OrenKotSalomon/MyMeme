@@ -17,13 +17,22 @@ function onInit() {
 }
 
 
+function onDeleteLine() {
+    deleteLine()
+    renderMeme()
+}
 
+
+function onAddLine() {
+    addLine()
+    renderMeme()
+}
 
 
 
 
 function onChangeText(ev) {
-    console.log('ev', ev);
+    // console.log('ev', ev);
     let input = ev.target
     let value = input.value
     setLineTxt(value)
@@ -41,6 +50,8 @@ function onDownloadMeme() {
     downloadImg(elLink)
 
 }
+
+
 
 
 function onImgSelect(elImgId, elImg) {
@@ -75,43 +86,38 @@ function renderLines() {
     // console.log('lines', lines);
 
     lines.forEach((line, idx) => {
-        // debugger
-        if (!idx) {
-            gCtx.font = `${line.size}px Impact`
-            gCtx.fillStyle = line.color
-            gCtx.textBaseline = line.align
-            gCtx.textAlign = line.align
-            gCtx.lineWidth = 10
 
-            gCtx.strokeText(line.txt, line.x, line.y) //img,x,y,xEnd,yEnd
-            gCtx.fillText(line.txt, line.x, line.y)
-        }
-        if (idx === 1) {
+        gCtx.beginPath()
+        gCtx.font = `${line.size}px arial`
+        gCtx.fillStyle = line.color
+        gCtx.textAlign = line.align
+        gCtx.lineWidth = 10
+
+        gCtx.strokeText(line.txt, line.x, line.y)
+        gCtx.fillText(line.txt, line.x, line.y)
+        if (idx === meme.selectedLineIdx) {
+            let txt = gCtx.measureText(line.txt)
+            console.log('lines', line.x, line.y);
             gCtx.beginPath()
-            gCtx.font = `${line.size}px Impact`
-            gCtx.fillStyle = line.color
-            gCtx.textBaseline = line.align
-            gCtx.textAlign = line.align
-            gCtx.lineWidth = 10
-
-            gCtx.strokeText(line.txt, line.x, line.y)//img,x,y,xEnd,yEnd
-            gCtx.fillText(line.txt, line.x, line.y)
+            let rectX = line.x - txt.actualBoundingBoxLeft - 15
+            let rectY = line.y - txt.fontBoundingBoxAscent - 10
+            let rectWidth = txt.width + 30
+            let rectHeigth = txt.fontBoundingBoxAscent + 30
+            gCtx.strokeRect(rectX, rectY, rectWidth, rectHeigth)
+            gCtx.lineWidth = 3
+            console.log('lines', line.x - txt.actualBoundingBoxAscent, line.y);
+            console.log('txt', txt);
+            // console.log('idx', idx);
+            getRect(rectX, rectY, rectWidth, rectHeigth)
         }
-        // else {
-        //     gCtx.beginPath()
-        //     gCtx.font = `${line.size}px Arial`
-        //     gCtx.fillStyle = line.color
-        //     gCtx.textAlign =
-        //         gCtx.strokeText(line.txt, 50, 225) //img,x,y,xEnd,yEnd
-        //     gCtx.fillText(line.txt, 50, 225)
-        // }
+
     });
 }
 
 
 function onSwitchLines() {
     switchLines()
-
+    renderMeme()
 }
 
 
@@ -140,23 +146,30 @@ function addTouchListeners() {
     // gCanvas.addEventListener('touchend', onUp)
 }
 
-function onClick(ev) {
 
-    let x = ev.offsetX
-    let y = ev.offsetY
-    console.log('x', x);
-    console.log(' y', y);
+function onClick(ev) {
+    let pos = getEvPos()
+    if (!isLineClicked(pos)) return
+
 
 }
 
+function clickedLine() {
+    let pos = getEvPos()
+
+
+
+
+}
 
 function onDown(ev) {
     // Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
     // console.log('pos', pos);
     // console.log('gpos', gCurrPos);
-
+    if (!isLineClicked(pos)) return
     setLineDrag(true)
+
     document.body.style.cursor = 'grabbing'
 }
 
@@ -171,7 +184,12 @@ function onMove(ev) {
     gCurrPos = pos
     moveLine(pos)
     renderMeme()
+    console.log('gCurrPos', gCurrPos);
+
 }
+
+
+
 
 function onUp() {
     // setCircleDrag(false)
@@ -213,7 +231,6 @@ function renderMeme() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         renderLines()
-        // gCtx.textAlign = "center";
     }
 }
 

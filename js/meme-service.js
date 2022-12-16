@@ -14,6 +14,7 @@ let gMeme =
 {
     id: 0,
     selectedLineIdx: 0,
+    // var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
     lines: [
         {
             txt: 'I sometimes eat Falafel',
@@ -22,7 +23,13 @@ let gMeme =
             color: 'white',
             x: 200,
             y: 50,
-            isDrag: false
+            isDrag: false,
+            rect: {
+                rectX: 0,
+                rectY: 0,
+                rectWidth: 0,
+                rectHeigth: 0
+            }
         },
         {
             txt: 'I  eat Falafel',
@@ -31,15 +38,64 @@ let gMeme =
             color: 'white',
             x: 200,
             y: 450,
-            isDrag: false
+            isDrag: false,
+            rect: {
+                rectX: 0,
+                rectY: 0,
+                rectWidth: 0,
+                rectHeigth: 0
+            }
         }
 
     ]
 }
 
 
+function getRect(x, y, width, height) {
+    let lines = gMeme.lines
+    let { selectedLineIdx } = gMeme
+    let rect = lines[selectedLineIdx].rect
+    rect.rectX = x
+    rect.rectY = y
+    rect.rectWidth = width
+    rect.rectHeigth = height
+    console.log('rect', rect);
 
+}
 
+function deleteLine() {
+    let lines = gMeme.lines
+    lines.splice(selectedLineIdx, 1)
+    gMeme.selectedLineIdx = 0
+
+}
+
+function addLine() {
+    let lines = gMeme.lines
+    let newLine = {
+        txt: 'NEW LINE',
+        size: 30,
+        align: 'center',
+        color: 'white',
+        x: 200,
+        y: 225,
+        isDrag: false,
+        rect: {
+            rectX: 0,
+            rectY: 0,
+            rectWidth: 0,
+            rectHeigth: 0
+        }
+    }
+    lines.push(newLine)
+    console.log(lines);
+}
+function isLineClicked(clickedPos) {
+    let lineIdx = gMeme.selectedLineIdx
+    let line = gMeme.lines[lineIdx]
+    let dis = Math.sqrt((line.x - clickedPos.x) * 2 + (line.y - clickedPos.y) * 2)
+    return dis <= line.size
+}
 
 function moveLine(pos) {
     let lineIdx = gMeme.selectedLineIdx
@@ -47,21 +103,17 @@ function moveLine(pos) {
 
     line.x = pos.x
     line.y = pos.y
-    // console.log('line', line);
 
 }
 
 function setLineDrag(isDrag) {
     let lineIdx = gMeme.selectedLineIdx
     let line = gMeme.lines[lineIdx]
-    // console.log('isDrag', isDrag);
 
     line.isDrag = isDrag
 }
 
 function switchLines() {
-
-    // console.log(gMeme.lines.length);
     if (gMeme.selectedLineIdx < gMeme.lines.length - 1) {
         gMeme.selectedLineIdx++
     } else {
@@ -94,40 +146,36 @@ function getImages() {
 function setImg(id) {
     gMeme.id = id
 }
-function increaseFont() {
-    // console.log('', );
-    let selectedLine = gMeme.selectedLineIdx
 
+function increaseFont() {
+    let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].size++
-    // console.log('gMeme', gMeme.lines[selectedLine].size);
+
 
 }
 function decreaseFont() {
     let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].size--
-    // console.log('gMeme', gMeme.lines[selectedLine].size);
+
 }
 
 
 function getCurrImg() {
     let currUrl = gImgs.find(img => img.id === gMeme.id)
-    // console.log('currUrl', currUrl);
+
 
     return currUrl.url
 }
 
 function getMemeLine() {
-    // console.log(gMeme.lines);
+
     let selectedLine = gMeme.selectedLineIdx
     let lines = gMeme.lines[selectedLine].txt
     return lines
-    // return gMeme
+
 }
 
 
-// function _createMeme() {
-//     return
-// }
 
 
 
@@ -141,23 +189,3 @@ function getMemeLine() {
 
 
 
-
-// var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
-// var gMeme = {
-//  selectedImgId: 5,
-//  selectedLineIdx: selectedLineIdx,
-
-
-
-
-
-
-//  lines: [
-//  {
-//  txt: 'I sometimes eat Falafel',
-//  size: 20,
-//  align: 'left',
-//  color: 'red'
-//  }
-//  ]
-// }

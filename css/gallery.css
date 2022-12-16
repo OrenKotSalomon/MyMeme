@@ -62,8 +62,11 @@ button {
     border-style: none;
     background-image: linear-gradient(to right, #0f9bb3, #2eb977);
     color: #fefefe;
+    width: 11em;
 }
 
 .btn-upload {
     width: 11em;
+    background-image: linear-gradient(to left, #0f9bb3, #2eb977);
+
 }
