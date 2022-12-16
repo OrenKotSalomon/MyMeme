@@ -93,7 +93,7 @@ function addLine() {
 function isLineClicked(clickedPos) {
     let lineIdx = gMeme.selectedLineIdx
     let line = gMeme.lines[lineIdx]
-    let dis = Math.sqrt((line.x - clickedPos.x) * 2 + (line.y - clickedPos.y) * 2)
+    let dis = Math.sqrt((line.x - clickedPos.x) ** 2 + (line.y - clickedPos.y) ** 2)
     return dis <= line.size
 }
 
@@ -121,6 +121,53 @@ function switchLines() {
     }
 
 }
+function getClickedLine(lineIdx) {
+    gMeme.selectedLineIdx = lineIdx
+}
+function clickedLine(ev) {
+    let lineIdx = gMeme.selectedLineIdx
+    // console.log('ev', ev);
+
+    // let x = pos.x
+    // let y = pos.y
+    let x = ev.offsetX
+    let y = ev.offsetY
+    // console.log('x', x);
+
+    let lines = gMeme.lines
+    // let rect = lines[lineIdx].rect
+    let currLine = lines.findIndex(line =>
+        x > line.rect.rectX &&
+        x < (line.rect.rectX + line.rect.rectWidth)
+        && y > line.rect.rectY &&
+        y < (line.rect.rectY + line.rect.rectHeigth)
+    )
+
+    if (currLine === -1) return
+    else {
+        getClickedLine(currLine)
+        renderMeme()
+    }
+
+
+    // lines[lineIdx].isDrag = true
+    console.log(' gMeme.selectedLineIdx', gMeme.selectedLineIdx);
+    console.log('gmeme', gMeme.lines);
+
+    // // lines[lineIdx].isDrag = true
+
+    // console.log('x', x);
+    // console.log('y', y);
+    // console.log(' lines[lineIdx].rect.rectX', lines[lineIdx].rect.rectX);
+    // console.log('lines[lineIdx].rect.rectY', lines[lineIdx].rect.rectY);
+    // console.log('line.rect.rectX + line.rect.width', lines[lineIdx].rect.rectX + lines[lineIdx].rect.rectWidth);
+    // console.log('line.rect.rectY - line.rect.rectHeigth', lines[lineIdx].rect.rectY + lines[lineIdx].rect.rectWidth + 50);
+
+    // console.log('currLine', currLine);
+
+
+}
+
 
 
 function setLineTxt(value) {

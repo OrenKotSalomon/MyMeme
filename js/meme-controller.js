@@ -95,9 +95,9 @@ function renderLines() {
 
         gCtx.strokeText(line.txt, line.x, line.y)
         gCtx.fillText(line.txt, line.x, line.y)
+
         if (idx === meme.selectedLineIdx) {
             let txt = gCtx.measureText(line.txt)
-            console.log('lines', line.x, line.y);
             gCtx.beginPath()
             let rectX = line.x - txt.actualBoundingBoxLeft - 15
             let rectY = line.y - txt.fontBoundingBoxAscent - 10
@@ -105,9 +105,6 @@ function renderLines() {
             let rectHeigth = txt.fontBoundingBoxAscent + 30
             gCtx.strokeRect(rectX, rectY, rectWidth, rectHeigth)
             gCtx.lineWidth = 3
-            console.log('lines', line.x - txt.actualBoundingBoxAscent, line.y);
-            console.log('txt', txt);
-            // console.log('idx', idx);
             getRect(rectX, rectY, rectWidth, rectHeigth)
         }
 
@@ -136,7 +133,7 @@ function addMouseListeners() {
     gCanvas.addEventListener('mousemove', onMove)
     gCanvas.addEventListener('mousedown', onDown)
     gCanvas.addEventListener('mouseup', onUp)
-    gCanvas.addEventListener('click', onClick)
+    // gCanvas.addEventListener('click', onClick)
 }
 
 function addTouchListeners() {
@@ -146,28 +143,45 @@ function addTouchListeners() {
     // gCanvas.addEventListener('touchend', onUp)
 }
 
+function clickedLine(ev) {
+    let meme = getMeme()
+    let lineIdx = meme.selectedLineIdx
+    // console.log('ev', ev);
 
-function onClick(ev) {
-    let pos = getEvPos()
-    if (!isLineClicked(pos)) return
+    // let x = pos.x
+    // let y = pos.y
+    let x = ev.offsetX
+    let y = ev.offsetY
+    // console.log('x', x);
 
+    let lines = gMeme.lines
+    // let rect = lines[lineIdx].rect
+    let currLine = lines.findIndex(line =>
+        x > line.rect.rectX &&
+        x < (line.rect.rectX + line.rect.rectWidth)
+        && y > line.rect.rectY &&
+        y < (line.rect.rectY + line.rect.rectHeigth)
+    )
+
+    if (currLine === -1) return
+    else {
+        getClickedLine(currLine)
+        renderMeme()
+    }
 
 }
 
-function clickedLine() {
-    let pos = getEvPos()
 
 
-
-
-}
 
 function onDown(ev) {
     // Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
     // console.log('pos', pos);
     // console.log('gpos', gCurrPos);
+    clickedLine(ev)
     if (!isLineClicked(pos)) return
+    renderMeme()
     setLineDrag(true)
 
     document.body.style.cursor = 'grabbing'
