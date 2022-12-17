@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/editor.css">
     <link rel="stylesheet" href="css/gallery.css">
-    <title>Document</title>
+    <title>MemeGen</title>
 </head>
 
-<body onload="onInit()" class="main-layout full">
+<body onload="onInit()" class="main-layout">
+    <!-- <div class="main-screen full" onclick="toggleMenu()"></div> -->
     <header class="header full">
-        <nav class="nav-container">
-            <div class="logo">LOGO</div>
-            <ul class="link-container">
+        <nav class=" nav-container ">
+            <div class="logo"><img src="css/img/logo.png" alt=""></div>
+            <ul class="link-container hide">
                 <li><a class="gallery-link" href="index.html">Gallery</a></li>
-                <li><a href="">Memes</a></li>
+                <li><a href="SaveMeme.html">Memes</a></li>
                 <li><a href="https://www.linkedin.com/in/oren-kot-1344681b4/">About</a></li>
             </ul>
         </nav>
@@ -27,17 +28,25 @@
         <div class="gallery-main-container">
             <div class="search-container">
                 <label for="search">
-                    <input type="search" id="search" placeholder="search...">
+                    <input type="search" id="search" placeholder="search..." onkeyup="onSetFilterBy(this.value)">
                 </label>
-                <div class="words-filter"></div>
-                <button class="more-words-btn">More</button>
-            </div>
-            <button class="btn-random" onclick="onRandomMeme()">Random Meme!</button>
-            <input type="file" id="file" onclick="handleImage(event)" accept="image/jpeg, image/png, image/jpg">
-            <img id="image">
-            <div class="img-container">
+                <div class="words-filter">
+                    <!-- 'funny': 12, 'cat': 16, 'baby': 14, 'man': 12 -->
+                    <p value="all" onclick="onClickFilterWord(this)">All</p>
+                    <p value="funny" onclick="onClickFilterWord(this)">Funny</p>
+                    <p value="cat" onclick="onClickFilterWord(this)">Cat</p>
+                    <p value="baby" onclick="onClickFilterWord(this)">Baby</p>
+                    <p value="man" onclick="onClickFilterWord(this)">Man</p>
+                </div>
 
+                <button class="btn-random" onclick="onRandomMeme()">Random Meme!</button>
+                <input type="file" id="file" onclick="handleImage(event)" accept="image/jpeg, image/png, image/jpg">
+                <img id="image">
             </div>
+        </div>
+        <div class="img-container">
+
+        </div>
         </div>
     </section>
 
@@ -53,15 +62,20 @@
                 </label>
                 <div class="line-control">
                     <button class="switchLine-btn" onclick="onSwitchLines(1)"> &#x2191 &#x2193</button>
-                    <button class="addLine-btn" onclick="onAddLine()">+</button>
-                    <button class="delete-btn" onclick="onDeleteLine()">Delete</button>
+                    <button class="addLine-btn" onclick="onAddLine()"><i class="fa-solid fa-plus"></i></button>
+                    <button class="delete-btn" onclick="onDeleteLine()"><i class="fa-regular fa-trash-can"></i></button>
                 </div>
                 <div class="font-container">
-                    <button class="arrow-btn" onclick="onIncreaseFont(1)">A+</button>
-                    <button class="arrow-btn" onclick="onDecreaseFont(1)">A-</button>
-                    <button class="font-aling-left" onclick="onClickAling(this.value)" value="right">left</button>
-                    <button class="font-aling-center" onclick="onClickAling(this.value)" value="center">center</button>
-                    <button class="font-aling-right" onclick="onClickAling(this.value)" value="left">right</button>
+                    <button class="arrow-btn" onclick="onIncreaseFont(1)"><i class="fa-solid fa-a"></i><i
+                            class="fa-solid fa-plus"></i></button>
+                    <button class="arrow-btn" onclick="onDecreaseFont(1)"><i class="fa-solid fa-a"></i><i
+                            class="fa-solid fa-minus"></i></button>
+                    <button class="font-aling-left" onclick="onClickAling(this.value)" value="right"><i
+                            class="fa-solid fa-align-left"></i></button>
+                    <button class="font-align-center" onclick="onClickAling(this.value)" value="center"><i
+                            class="fa-solid fa-align-justify"></i></button>
+                    <button class="font-aling-right" onclick="onClickAling(this.value)" value="left"><i
+                            class="fa-solid fa-align-right"></i></button>
                     <select name="font-select" id="font-select" onchange="onSelectFont(this.value)">
                         <option value="">Select Font</option>
                         <option value="Impact">Impact</option>
@@ -72,11 +86,11 @@
                         <option value="Tahoma">Tahoma</option>
                     </select>
                     <label for="borderColor">
-                        S
+                        <i class="fa-solid fa-s"></i>
                         <input type="color" id="borderColor" onchange="onChangeStroke(event)">
                     </label>
                     <label for="bgc">
-                        bgc
+                        <i class="fa-sharp fa-solid fa-palette"></i>
                         <input type="color" id="bgc" onchange="OnChangeBgc(event)">
                     </label>
 
@@ -85,12 +99,16 @@
                     <button class="share" onclick="onShareImg()">Share</button>
                     <button class="download"><a href="#" class="btn" onclick="downloadImg(this)"
                             download="my-img.jpg">Download</a></button>
+                    <button class="save-meme" onclick="onSaveMeme()">Save</button>
                 </div>
             </div>
         </div>
     </section>
+    <script src="https://kit.fontawesome.com/9f37c23b1f.js" crossorigin="anonymous"></script>
 
-    <script src="js/main.js"></script>
+    <script src="js/storage-service.js"></script>
+    <script src="js/saved-service.js"></script>
+
     <script src="js/meme-service.js"></script>
     <script src="js/galleryController.js"></script>
     <script src="js/meme-controller.js"></script>

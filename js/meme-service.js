@@ -1,20 +1,40 @@
 
+let gFilter = { search: '' }
+let gCanvasWidth
+let gCanvasHeight
 
+var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 14, 'man': 12 }
+var gImgs = [
+    { id: 1, url: 'images/1.jpg', keywords: ['trump', 'mad'] },
+    { id: 2, url: 'images/2.jpg', keywords: ['funny', 'dog'] },
+    { id: 3, url: 'images/3.jpg', keywords: ['baby', 'dog'] },
+    { id: 4, url: 'images/4.jpg', keywords: ['funny', 'cat'] },
+    { id: 5, url: 'images/6.jpg', keywords: ['funny', 'baby'] },
+    { id: 6, url: 'images/5.jpg', keywords: ['man', 'history'] },
+    { id: 7, url: 'images/7.jpg', keywords: ['baby', 'black'] },
+    { id: 8, url: 'images/8.jpg', keywords: ['man', 'wonka'] },
+    { id: 9, url: 'images/9.jpg', keywords: ['funny', 'baby'] },
+    { id: 10, url: 'images/10.jpg', keywords: ['man', 'obama'] },
+    { id: 11, url: 'images/11.jpg', keywords: ['man', 'kiss'] },
+    { id: 12, url: 'images/12.jpg', keywords: ['man'] },
+    { id: 13, url: 'images/13.jpg', keywords: ['man', 'wine'] },
+    { id: 14, url: 'images/14.jpg', keywords: ['man', 'glasses'] },
+    { id: 15, url: 'images/15.jpg', keywords: ['man', 'smoke'] },
+    { id: 16, url: 'images/16.jpg', keywords: ['funny', 'slap'] },
+    { id: 17, url: 'images/17.jpg', keywords: ['man', 'putin'] },
+    { id: 18, url: 'images/18.jpg', keywords: ['anime', 'buzz'] },
+    { id: 19, url: 'images/19.jpg', keywords: ['man', 'hason'] },
+    { id: 20, url: 'images/20.jpg', keywords: ['man', 'hands'] },
+    { id: 21, url: 'images/21.jpg', keywords: ['baby', 'dancing'] },
+    { id: 22, url: 'images/22.jpg', keywords: ['trump', 'mad'] },
+    { id: 23, url: 'images/23.jpg', keywords: ['baby', 'dog'] },
+    { id: 24, url: 'images/24.jpg', keywords: ['woman', 'shout'] },
 
-var gImgs = [{ id: 1, url: 'images/1.jpg', keywords: ['funny', 'cat'] },
-{ id: 2, url: 'images/2.jpg', keywords: ['funny', 'cat'] },
-{ id: 3, url: 'images/3.jpg', keywords: ['funny', 'cat'] },
-{ id: 4, url: 'images/4.jpg', keywords: ['funny', 'cat'] },
-{ id: 5, url: 'images/5.jpg', keywords: ['funny', 'cat'] },
-{ id: 6, url: 'images/6.jpg', keywords: ['funny', 'cat'] },
-{ id: 7, url: 'images/7.jpg', keywords: ['funny', 'cat'] }
 ];
-// let gMemeIdx = 1
 let gMeme =
 {
     id: 0,
     selectedLineIdx: 0,
-    // var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
     lines: [
         {
             txt: 'I sometimes eat Falafel',
@@ -23,7 +43,8 @@ let gMeme =
             color: 'white',
             stroke: 'black',
             font: 'Impact',
-            x: 200,
+            img: '',
+            x: 250,
             y: 50,
             isDrag: false,
             rect: {
@@ -40,7 +61,7 @@ let gMeme =
             color: 'white',
             stroke: 'black',
             font: 'Impact',
-            x: 200,
+            x: 250,
             y: 450,
             isDrag: false,
             rect: {
@@ -54,6 +75,13 @@ let gMeme =
     ]
 }
 
+function getCanvas(gCanvas) {
+    let line = gMeme.lines
+    line[0].x = gCanvas.width / 2
+    line[1].x = gCanvas.width / 2
+    line[1].y = gCanvas.height * 0.80
+
+}
 
 function getRect(x, y, width, height) {
     let lines = gMeme.lines
@@ -63,9 +91,6 @@ function getRect(x, y, width, height) {
     rect.rectY = y
     rect.rectWidth = width
     rect.rectHeigth = height
-    // console.log('rect', rect);
-    console.log('selectedLineIdx', selectedLineIdx);
-
 }
 
 function deleteLine() {
@@ -74,7 +99,6 @@ function deleteLine() {
     lines.splice(LineIdx, 1)
     gMeme.selectedLineIdx = 0
 }
-
 
 function setAlign(alignPos) {
     let lineIdx = gMeme.selectedLineIdx
@@ -93,8 +117,8 @@ function addLine() {
         color: 'white',
         stroke: 'black',
         font: 'Impact',
-        x: 200,
-        y: 225,
+        x: getRandomIntInclusive(50, 300),
+        y: 250,
         isDrag: false,
         rect: {
             rectX: 0,
@@ -104,7 +128,6 @@ function addLine() {
         }
     }
     lines.push(newLine)
-    console.log(lines);
 }
 function isLineClicked(clickedPos) {
     let lineIdx = gMeme.selectedLineIdx
@@ -116,7 +139,6 @@ function isLineClicked(clickedPos) {
 function moveLine(pos) {
     let lineIdx = gMeme.selectedLineIdx
     let line = gMeme.lines[lineIdx]
-
     line.x = pos.x
     line.y = pos.y
 
@@ -125,7 +147,6 @@ function moveLine(pos) {
 function setLineDrag(isDrag) {
     let lineIdx = gMeme.selectedLineIdx
     let line = gMeme.lines[lineIdx]
-
     line.isDrag = isDrag
 }
 
@@ -135,38 +156,29 @@ function switchLines() {
     } else {
         gMeme.selectedLineIdx = 0
     }
-
 }
 
 function mapLines() {
     let lines = gMeme.lines
     for (let i = 0; i < lines.length; i++) {
-        const currLine = lines[i];
-        console.log('currLine', currLine);
-        console.log('i', i);
-
         gMeme.selectedLineIdx = i
         renderLines()
-        // console.log(' gMeme.selectedLineIdx', gMeme.selectedLineIdx);
     }
 }
 
+function downloadImg(elLink) {
+
+    const imgContent = gCanvas.toDataURL('image/jpg') // image/jpeg the default format
+    elLink.href = imgContent
+}
 
 function getClickedLine(lineIdx) {
     gMeme.selectedLineIdx = lineIdx
 }
 function clickedLine(ev) {
-    let lineIdx = gMeme.selectedLineIdx
-    // console.log('ev', ev);
-
-    // let x = pos.x
-    // let y = pos.y
     let x = ev.offsetX
     let y = ev.offsetY
-    // console.log('x', x);
-    console.log('lineIdx', lineIdx);
     let lines = gMeme.lines
-    // let rect = lines[lineIdx].rect
     let currLine = lines.findIndex(line =>
         x > line.rect.rectX &&
         x < (line.rect.rectX + line.rect.rectWidth)
@@ -177,16 +189,9 @@ function clickedLine(ev) {
     if (currLine === -1) return
     else {
         getClickedLine(currLine)
-
-
         renderMeme()
     }
-
-
-
 }
-
-
 
 function setLineTxt(value) {
     let selectedLine = gMeme.selectedLineIdx
@@ -201,26 +206,37 @@ function setColor(value) {
 function setStroke(vlaue) {
     let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].stroke = vlaue
-
 }
 
 function setFont(vlaue) {
     if (!vlaue) return
     let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].font = vlaue
-
 }
-
 
 function getMeme() {
     return gMeme
 }
 
 function getImages() {
-    return gImgs
+    const imgs = gImgs
+    if (!gFilter.search) return imgs
+    let filteredImgs = gImgs.filter((img) =>
+        img.keywords.find((kw) => kw.includes(gFilter.search))
+    )
+    return filteredImgs
 }
 
+function setFilterByClick(word) {
+    if (word === 'all') return gFilter.search = ''
+    gFilter.search = word
+    console.log('gKeywordSearchCountMap.word', gKeywordSearchCountMap);
+}
 
+function setFilerBy(txt) {
+    if (txt === undefined) return
+    gFilter.search = txt
+}
 
 function setImg(id) {
     gMeme.id = id
@@ -229,25 +245,19 @@ function setImg(id) {
 function increaseFont() {
     let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].size++
-
-
 }
 function decreaseFont() {
     let selectedLine = gMeme.selectedLineIdx
     gMeme.lines[selectedLine].size--
-
 }
 
 
 function getCurrImg() {
     let currUrl = gImgs.find(img => img.id === gMeme.id)
-
-
     return currUrl.url
 }
 
 function getMemeLine() {
-
     let selectedLine = gMeme.selectedLineIdx
     let lines = gMeme.lines[selectedLine].txt
     return lines

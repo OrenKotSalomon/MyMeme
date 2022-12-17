@@ -17,7 +17,7 @@
 }
 
 .editors {
-    height: 80%;
+    height: 94%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -87,7 +87,9 @@ button {
 
 }
 
-
+.font-container button {
+    background-color: #151704;
+}
 
 .editor-container button {
     border-radius: 12.5px;
@@ -109,4 +111,74 @@ button {
 .download a {
     text-decoration: none;
     text-transform: none;
+}
+
+.save-meme {
+    background-color: rgb(84, 183, 135);
+}
+
+@media (max-width: 1035px) {
+
+    .main-container {
+        /* height: 100vh; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .canvas-container {
+        height: 100%;
+        margin-bottom: 10px;
+        display: flex;
+    }
+
+    #canvas {
+        height: 500px;
+        display: flex;
+    }
+
+    .editors {
+        position: relative;
+        width: 500px;
+        justify-self: center;
+        gap: 10px;
+    }
+
+    .line-text {
+        height: 60%;
+    }
+
+}
+
+@media (max-width: 930px) {
+    .main-container {
+        /* height: 100vh; */
+        width: 100vw;
+    }
+
+
+}
+
+@media (max-width: 550px) {
+    .editors {
+        width: 300px;
+    }
+
+    .line-text {
+        width: 100%;
+    }
+
+    .font-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        width: 100%;
+    }
+
+
+    #canvas {
+        position: relative;
+        width: 375px;
+        height: 375px;
+    }
+
 }
