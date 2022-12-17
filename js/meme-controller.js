@@ -13,7 +13,7 @@ function onInit() {
     })
     // resizeCanvas()
     addListeners()
-
+    mapLines()
 }
 
 
@@ -26,6 +26,7 @@ function onDeleteLine() {
 function onAddLine() {
     addLine()
     renderMeme()
+    mapLines()
 }
 
 
@@ -51,7 +52,12 @@ function onDownloadMeme() {
 
 }
 
+function onSelectFont(elFont) {
 
+    setFont(elFont)
+    renderMeme()
+
+}
 
 
 function onImgSelect(elImgId, elImg) {
@@ -68,6 +74,17 @@ function OnChangeBgc(ev) {
     setColor(vlaue)
     renderMeme()
 }
+
+function onChangeStroke(ev) {
+
+    let input = ev.target
+    let vlaue = input.value
+    setStroke(vlaue)
+    renderMeme()
+}
+
+
+
 function onDecreaseFont() {
     decreaseFont()
     renderMeme()
@@ -88,14 +105,13 @@ function renderLines() {
     lines.forEach((line, idx) => {
 
         gCtx.beginPath()
-        gCtx.font = `${line.size}px arial`
+        gCtx.font = `${line.size}px ${line.font}`
         gCtx.fillStyle = line.color
         gCtx.textAlign = line.align
         gCtx.lineWidth = 10
-
+        gCtx.strokeStyle = line.stroke
         gCtx.strokeText(line.txt, line.x, line.y)
         gCtx.fillText(line.txt, line.x, line.y)
-
         if (idx === meme.selectedLineIdx) {
             let txt = gCtx.measureText(line.txt)
             gCtx.beginPath()
@@ -109,6 +125,7 @@ function renderLines() {
         }
 
     });
+
 }
 
 
@@ -245,8 +262,29 @@ function renderMeme() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         renderLines()
+
     }
 }
+
+// function handleImage(e) {
+//     var reader = new FileReader();
+//     reader.onload = function (event) {
+//         var img = new Image();
+//         img.onload = function () {
+//             gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
+//         }
+//         img.src = event.target.result;
+//     }
+//     reader.readAsDataURL(e.target.files[0]);
+// }
+
+
+function onClickAling(elAlign) {
+    console.log('elAlign', elAlign);
+    setAlign(elAlign)
+    renderMeme()
+}
+
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')

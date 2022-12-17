@@ -33,7 +33,7 @@
                 <button class="more-words-btn">More</button>
             </div>
             <button class="btn-random" onclick="onRandomMeme()">Random Meme!</button>
-            <input type="file" id="file" onclick="onClickFile(event)" accept="image/jpeg, image/png, image/jpg">
+            <input type="file" id="file" onclick="handleImage(event)" accept="image/jpeg, image/png, image/jpg">
             <img id="image">
             <div class="img-container">
 
@@ -59,18 +59,21 @@
                 <div class="font-container">
                     <button class="arrow-btn" onclick="onIncreaseFont(1)">A+</button>
                     <button class="arrow-btn" onclick="onDecreaseFont(1)">A-</button>
-                    <button class="font-aling-left">left</button>
-                    <button class="font-aling-center">center</button>
-                    <button class="font-aling-right">right</button>
-                    <select name="font-select" id="font-select">
-                        <option value="impact">impact</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
+                    <button class="font-aling-left" onclick="onClickAling(this.value)" value="right">left</button>
+                    <button class="font-aling-center" onclick="onClickAling(this.value)" value="center">center</button>
+                    <button class="font-aling-right" onclick="onClickAling(this.value)" value="left">right</button>
+                    <select name="font-select" id="font-select" onchange="onSelectFont(this.value)">
+                        <option value="">Select Font</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Tahoma">Tahoma</option>
                     </select>
                     <label for="borderColor">
                         S
-                        <input type="color" id="borderColor">
+                        <input type="color" id="borderColor" onchange="onChangeStroke(event)">
                     </label>
                     <label for="bgc">
                         bgc

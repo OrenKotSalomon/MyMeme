@@ -21,6 +21,8 @@ let gMeme =
             size: 30,
             align: 'center',
             color: 'white',
+            stroke: 'black',
+            font: 'Impact',
             x: 200,
             y: 50,
             isDrag: false,
@@ -36,6 +38,8 @@ let gMeme =
             size: 30,
             align: 'center',
             color: 'white',
+            stroke: 'black',
+            font: 'Impact',
             x: 200,
             y: 450,
             isDrag: false,
@@ -59,14 +63,24 @@ function getRect(x, y, width, height) {
     rect.rectY = y
     rect.rectWidth = width
     rect.rectHeigth = height
-    console.log('rect', rect);
+    // console.log('rect', rect);
+    console.log('selectedLineIdx', selectedLineIdx);
 
 }
 
 function deleteLine() {
     let lines = gMeme.lines
-    lines.splice(selectedLineIdx, 1)
+    let LineIdx = gMeme.selectedLineIdx
+    lines.splice(LineIdx, 1)
     gMeme.selectedLineIdx = 0
+}
+
+
+function setAlign(alignPos) {
+    let lineIdx = gMeme.selectedLineIdx
+    let line = gMeme.lines[lineIdx]
+    line.align = alignPos
+
 
 }
 
@@ -77,6 +91,8 @@ function addLine() {
         size: 30,
         align: 'center',
         color: 'white',
+        stroke: 'black',
+        font: 'Impact',
         x: 200,
         y: 225,
         isDrag: false,
@@ -121,6 +137,21 @@ function switchLines() {
     }
 
 }
+
+function mapLines() {
+    let lines = gMeme.lines
+    for (let i = 0; i < lines.length; i++) {
+        const currLine = lines[i];
+        console.log('currLine', currLine);
+        console.log('i', i);
+
+        gMeme.selectedLineIdx = i
+        renderLines()
+        // console.log(' gMeme.selectedLineIdx', gMeme.selectedLineIdx);
+    }
+}
+
+
 function getClickedLine(lineIdx) {
     gMeme.selectedLineIdx = lineIdx
 }
@@ -133,7 +164,7 @@ function clickedLine(ev) {
     let x = ev.offsetX
     let y = ev.offsetY
     // console.log('x', x);
-
+    console.log('lineIdx', lineIdx);
     let lines = gMeme.lines
     // let rect = lines[lineIdx].rect
     let currLine = lines.findIndex(line =>
@@ -146,24 +177,11 @@ function clickedLine(ev) {
     if (currLine === -1) return
     else {
         getClickedLine(currLine)
+
+
         renderMeme()
     }
 
-
-    // lines[lineIdx].isDrag = true
-    console.log(' gMeme.selectedLineIdx', gMeme.selectedLineIdx);
-    console.log('gmeme', gMeme.lines);
-
-    // // lines[lineIdx].isDrag = true
-
-    // console.log('x', x);
-    // console.log('y', y);
-    // console.log(' lines[lineIdx].rect.rectX', lines[lineIdx].rect.rectX);
-    // console.log('lines[lineIdx].rect.rectY', lines[lineIdx].rect.rectY);
-    // console.log('line.rect.rectX + line.rect.width', lines[lineIdx].rect.rectX + lines[lineIdx].rect.rectWidth);
-    // console.log('line.rect.rectY - line.rect.rectHeigth', lines[lineIdx].rect.rectY + lines[lineIdx].rect.rectWidth + 50);
-
-    // console.log('currLine', currLine);
 
 
 }
@@ -175,10 +193,24 @@ function setLineTxt(value) {
     gMeme.lines[selectedLine].txt = value
 }
 
-function setColor(vlaue) {
+function setColor(value) {
     let selectedLine = gMeme.selectedLineIdx
-    gMeme.lines[selectedLine].color = vlaue
+    gMeme.lines[selectedLine].color = value
 }
+
+function setStroke(vlaue) {
+    let selectedLine = gMeme.selectedLineIdx
+    gMeme.lines[selectedLine].stroke = vlaue
+
+}
+
+function setFont(vlaue) {
+    if (!vlaue) return
+    let selectedLine = gMeme.selectedLineIdx
+    gMeme.lines[selectedLine].font = vlaue
+
+}
+
 
 function getMeme() {
     return gMeme
