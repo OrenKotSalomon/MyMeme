@@ -3,6 +3,7 @@ let gFilter = { search: '' }
 let gCanvasWidth
 let gCanvasHeight
 
+
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 14, 'man': 12 }
 var gImgs = [
     { id: 1, url: 'images/1.jpg', keywords: ['trump', 'mad'] },
@@ -43,7 +44,6 @@ let gMeme =
             color: 'white',
             stroke: 'black',
             font: 'Impact',
-            img: '',
             x: 250,
             y: 50,
             isDrag: false,
@@ -76,10 +76,15 @@ let gMeme =
 }
 
 function getCanvas(gCanvas) {
-    let line = gMeme.lines
-    line[0].x = gCanvas.width / 2
-    line[1].x = gCanvas.width / 2
-    line[1].y = gCanvas.height * 0.80
+    let lines = gMeme.lines
+    lines[0].x = gCanvas.width / 2
+    lines[1].x = gCanvas.width / 2
+    lines[1].y = gCanvas.height * 0.80
+    if (gCanvas.width < 370) {
+        return lines.forEach(line => line.size = 20)
+    } else {
+        return lines.forEach(line => line.size = 30)
+    }
 
 }
 
@@ -133,6 +138,7 @@ function isLineClicked(clickedPos) {
     let lineIdx = gMeme.selectedLineIdx
     let line = gMeme.lines[lineIdx]
     let dis = Math.sqrt((line.x - clickedPos.x) ** 2 + (line.y - clickedPos.y) ** 2)
+
     return dis <= line.size
 }
 
@@ -191,6 +197,7 @@ function clickedLine(ev) {
         getClickedLine(currLine)
         renderMeme()
     }
+
 }
 
 function setLineTxt(value) {
@@ -219,6 +226,7 @@ function getMeme() {
 }
 
 function getImages() {
+
     const imgs = gImgs
     if (!gFilter.search) return imgs
     let filteredImgs = gImgs.filter((img) =>
@@ -230,7 +238,6 @@ function getImages() {
 function setFilterByClick(word) {
     if (word === 'all') return gFilter.search = ''
     gFilter.search = word
-    console.log('gKeywordSearchCountMap.word', gKeywordSearchCountMap);
 }
 
 function setFilerBy(txt) {
@@ -251,10 +258,17 @@ function decreaseFont() {
     gMeme.lines[selectedLine].size--
 }
 
+function updateGmeme() {
+    let savedMeme = getSavedMeme()
+    gMeme = savedMeme
+    console.log('gMeme', gMeme);
+
+}
+
 
 function getCurrImg() {
     let currUrl = gImgs.find(img => img.id === gMeme.id)
-    return currUrl.url
+    return currUrl
 }
 
 function getMemeLine() {

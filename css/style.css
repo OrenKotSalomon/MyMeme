@@ -8,7 +8,10 @@
     ---clr3: #21ac91;
 }
 
+
+
 body {
     margin: 0 auto;
     background-color: var(--clr1);
+
 }

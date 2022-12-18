@@ -1,17 +1,13 @@
 let gCanvas
 let gCtx
 let gCurrPos
+let gImgFromUser
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 function onInit() {
     gCanvas = document.querySelector('#canvas')
     gCtx = gCanvas.getContext('2d')
     renderImages()
-    console.log('gCanvas', gCanvas);
-
-    window.addEventListener('resize', () => {
-        getCanvas(gCanvas)
-        resizeCanvas()
-    })
+    getCanvas(gCanvas)
     addListeners()
     mapLines()
 }
@@ -66,10 +62,10 @@ function onSelectFont(elFont) {
 function onImgSelect(elImgId, elImg) {
     const elGallery = document.querySelector('.gallery-container')
     const elEditor = document.querySelector('.editor-container')
-    setImg(elImgId)
-    renderMeme()
     elGallery.classList.add('hidden')
     elEditor.classList.remove('hidden')
+    setImg(elImgId)
+    renderMeme()
 }
 function OnChangeBgc(ev) {
     let input = ev.target
@@ -131,7 +127,9 @@ function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
+        getCanvas(gCanvas)
         resizeCanvas()
+        renderMeme()
     })
 }
 
@@ -185,14 +183,11 @@ function onMove(ev) {
     const meme = getMeme()
     const { selectedLineIdx, lines } = meme
     const isDrag = lines[selectedLineIdx].isDrag
-
     if (!isDrag) return
-
     const pos = getEvPos(ev)
     gCurrPos = pos
     moveLine(pos)
     renderMeme()
-    console.log('gCurrPos', gCurrPos);
 }
 
 
@@ -216,14 +211,21 @@ function getEvPos(ev) {
             x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
             y: ev.pageY - ev.target.offsetTop - ev.target.clientTop,
         }
+
+
     }
     return pos
 }
 
 function renderMeme() {
     let currImg = getCurrImg()
+    let currSavedImg = getSavedMeme()
     const img = new Image()
-    img.src = currImg
+    if (!currImg) {
+        img.src = currSavedImg.img
+    }
+    else img.src = currImg.url
+
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         renderLines()
@@ -232,7 +234,11 @@ function renderMeme() {
 
 function onSaveMeme() {
     saveMemeToStorage()
-    window.location.href = "saveMeme.html";
+    const elSavedGallery = document.querySelector('.saved-gallery-container')
+    const elEditor = document.querySelector('.editor-container')
+    elSavedGallery.classList.remove('hidden')
+    elEditor.classList.add('hidden')
+    renderSavedGallery()
 }
 
 function onClickAling(elAlign) {
@@ -245,7 +251,7 @@ function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
     gCanvas.width = elContainer.offsetWidth
     gCanvas.height = elContainer.offsetHeight
-    renderMeme()
+
 }
 
 function getRandomIntInclusive(min, max) {
@@ -263,3 +269,19 @@ function onShareImg() {
     }
     doUploadImg(imgDataUrl, onSuccess)
 }
+
+function onClickMemesPage() {
+    const elSavedGallery = document.querySelector('.saved-gallery-container')
+    const elGallery = document.querySelector('.gallery-container')
+    const elEditor = document.querySelector('.editor-container')
+    elSavedGallery.classList.remove('hidden')
+    elGallery.classList.add('hidden')
+    elEditor.classList.add('hidden')
+    renderSavedGallery()
+}
+
+
+function onImgInput(ev) {
+    loadImageFromInput(ev)
+}
+

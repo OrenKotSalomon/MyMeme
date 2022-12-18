@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/editor.css">
     <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/savedMemes.css">
     <title>MemeGen</title>
 </head>
 
@@ -15,10 +16,10 @@
     <!-- <div class="main-screen full" onclick="toggleMenu()"></div> -->
     <header class="header full">
         <nav class=" nav-container ">
-            <div class="logo"><img src="css/img/logo.png" alt=""></div>
+            <div class="logo"><img src="images/img/logo.png" alt=""></div>
             <ul class="link-container hide">
                 <li><a class="gallery-link" href="index.html">Gallery</a></li>
-                <li><a href="SaveMeme.html">Memes</a></li>
+                <li><a class="saved-memes" onclick="onClickMemesPage()">Memes</a></li>
                 <li><a href="https://www.linkedin.com/in/oren-kot-1344681b4/">About</a></li>
             </ul>
         </nav>
@@ -40,8 +41,8 @@
                 </div>
 
                 <button class="btn-random" onclick="onRandomMeme()">Random Meme!</button>
-                <input type="file" id="file" onclick="handleImage(event)" accept="image/jpeg, image/png, image/jpg">
-                <img id="image">
+                <!-- <input type="file" id="file" onchange="onImgInput(event)" accept="image/jpeg, image/png, image/jpg">
+                <img id="image"> -->
             </div>
         </div>
         <div class="img-container">
@@ -53,7 +54,8 @@
     <section class="editor-container hidden">
         <div class="main-container">
             <div class="canvas-container">
-                <canvas id="canvas" width="500" height="550"></canvas>
+                <canvas id="canvas" width="680" height="645"></canvas>
+
             </div>
             <div class="editors">
                 <label for="text">
@@ -96,20 +98,31 @@
 
                 </div>
                 <div class="btn-editor-container">
-                    <button class="share" onclick="onShareImg()">Share</button>
-                    <button class="download"><a href="#" class="btn" onclick="downloadImg(this)"
-                            download="my-img.jpg">Download</a></button>
-                    <button class="save-meme" onclick="onSaveMeme()">Save</button>
+                    <button class="share" onclick="onShareImg()"><i
+                            class="fa-solid fa-square-share-nodes fa-lg"></i></button>
+                    <button class="download" onclick="downloadImg(this)"><a href="#" class="btn"
+                            download="my-img.jpg"><i class="fa-solid fa-download fa-lg"></i></a></button>
+                    <button class="save-meme" onclick="onSaveMeme()"><i
+                            class="fa-sharp fa-solid fa-bookmark fa-lg"></i></button>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="saved-gallery-container hidden">
+        <div class="saved-main-container ">
+
+
+        </div>
+    </section>
+
+
     <script src="https://kit.fontawesome.com/9f37c23b1f.js" crossorigin="anonymous"></script>
 
-    <script src="js/storage-service.js"></script>
-    <script src="js/saved-service.js"></script>
-
-    <script src="js/meme-service.js"></script>
+    <script src="js/js-services/storage-service.js"></script>
+    <script src="js/js-services/saved-service.js"></script>
+    <script src="js/js-services/meme-service.js"></script>
+    <script src="js/saved-controller.js"></script>
     <script src="js/galleryController.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>
